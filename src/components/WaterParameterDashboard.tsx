@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle } from '@progress/kendo-react-layout';
-import { CircularGauge, RadialGauge, LinearGauge } from '@progress/kendo-react-gauges';
+import { ArcGauge, RadialGauge, LinearGauge } from '@progress/kendo-react-gauges';
 import { Chart, ChartSeries, ChartSeriesItem, ChartCategoryAxis, ChartCategoryAxisItem, ChartValueAxis, ChartValueAxisItem, ChartLegend, ChartTooltip } from '@progress/kendo-react-charts';
 import { Notification } from '@progress/kendo-react-notification';
 import { Button } from '@progress/kendo-react-buttons';
+import { FloatingLabel } from '@progress/kendo-react-labels';
 
 interface WaterParameter {
   name: string;
@@ -133,67 +134,137 @@ const WaterParameterDashboard: React.FC = () => {
   return (
     <div className="aquarium-theme">
       <div className="fade-in">
-        <h1 style={{ marginBottom: '20px', color: '#1976d2', fontSize: '28px' }}>
-          🐠 Water Parameter Dashboard
-        </h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: '24px',
+          padding: '20px',
+          background: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(33, 150, 243, 0.15)'
+        }}>
+          <div style={{ 
+            fontSize: '32px', 
+            marginRight: '16px',
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+          }}>🐠</div>
+          <div>
+            <h1 style={{ 
+              margin: 0, 
+              color: '#1976d2', 
+              fontSize: '28px',
+              fontWeight: '700',
+              textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            }}>
+              Water Parameter Dashboard
+            </h1>
+            <p style={{ 
+              margin: '4px 0 0 0', 
+              color: '#1565c0', 
+              fontSize: '16px',
+              fontWeight: '500'
+            }}>
+              Monitor and manage your aquarium's water quality
+            </p>
+          </div>
+        </div>
         
         {/* Current Parameters Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '30px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '30px' }}>
           {parameters.map((param, index) => (
-            <Card key={param.name} className="parameter-card">
-              <CardTitle>{param.name}</CardTitle>
-              <CardBody>
-                <div className="parameter-gauge">
-                  <div style={{ position: 'relative' }}>
-                    <CircularGauge
-                      value={param.current}
-                      scale={{
-                        min: param.optimalMin - (param.optimalMax - param.optimalMin) * 0.5,
-                        max: param.optimalMax + (param.optimalMax - param.optimalMin) * 0.5
-                      }}
-                      color={getGaugeColor(param.status)}
-                    />
-                    <div style={{ 
-                      position: 'absolute', 
-                      top: '50%', 
-                      left: '50%', 
-                      transform: 'translate(-50%, -50%)', 
-                      textAlign: 'center',
-                      pointerEvents: 'none'
-                    }}>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', color: getGaugeColor(param.status) }}>
-                        {param.current}{param.unit}
-                      </div>
-                      <div style={{ fontSize: '12px', color: '#666' }}>
-                        Optimal: {param.optimalMin}-{param.optimalMax}{param.unit}
-                      </div>
+            <Card key={param.name} className="parameter-card" style={{ 
+              borderRadius: '16px',
+              overflow: 'hidden',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+              transition: 'all 0.3s ease',
+              border: 'none'
+            }}>
+              <CardTitle style={{ 
+                background: `linear-gradient(135deg, ${getGaugeColor(param.status)} 0%, ${getGaugeColor(param.status)}dd 100%)`,
+                color: 'white',
+                padding: '20px 24px',
+                margin: 0,
+                fontSize: '18px',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}>
+                <span>{param.name}</span>
+                <span style={{
+                  padding: '4px 8px',
+                  borderRadius: '12px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  backgroundColor: param.status === 'optimal' ? '#4caf50' : param.status === 'warning' ? '#ff9800' : '#f44336',
+                  color: 'white'
+                }}>
+                  {param.status.toUpperCase()}
+                </span>
+              </CardTitle>
+              <CardBody style={{ padding: '24px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '20px', position: 'relative' }}>
+                  <ArcGauge
+                    value={param.current}
+                    scale={{
+                      min: param.optimalMin - (param.optimalMax - param.optimalMin) * 0.5,
+                      max: param.optimalMax + (param.optimalMax - param.optimalMin) * 0.5,
+                      majorUnit: (param.optimalMax - param.optimalMin) * 0.2,
+                      minorUnit: (param.optimalMax - param.optimalMin) * 0.1
+                    }}
+                    color={getGaugeColor(param.status)}
+                    style={{ height: '180px' }}
+                  />
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: '50%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)', 
+                    textAlign: 'center',
+                    pointerEvents: 'none'
+                  }}>
+                    <div style={{ fontSize: '24px', fontWeight: 'bold', color: getGaugeColor(param.status) }}>
+                      {param.current}{param.unit}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                      Optimal: {param.optimalMin}-{param.optimalMax}{param.unit}
                     </div>
                   </div>
                 </div>
                 
-                <div style={{ marginTop: '15px' }}>
-                  <div className={getStatusClass(param.status)}>
-                    {param.status.toUpperCase()}
-                  </div>
-                  <p style={{ marginTop: '10px', fontSize: '14px', color: '#666' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ 
+                    margin: 0, 
+                    fontSize: '14px', 
+                    color: '#666',
+                    lineHeight: '1.5'
+                  }}>
                     {param.description}
                   </p>
-                  
-                  <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
-                    <Button
-                      size="small"
-                      onClick={() => updateParameter(index, param.current - 0.1)}
-                      disabled={param.current <= 0}
-                    >
-                      -
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => updateParameter(index, param.current + 0.1)}
-                    >
-                      +
-                    </Button>
-                  </div>
+                </div>
+                
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '8px',
+                  justifyContent: 'center'
+                }}>
+                  <Button
+                    size="small"
+                    fillMode="outline"
+                    onClick={() => updateParameter(index, param.current - 0.1)}
+                    disabled={param.current <= 0}
+                    style={{ minWidth: '40px' }}
+                  >
+                    −
+                  </Button>
+                  <Button
+                    size="small"
+                    fillMode="outline"
+                    onClick={() => updateParameter(index, param.current + 0.1)}
+                    style={{ minWidth: '40px' }}
+                  >
+                    +
+                  </Button>
                 </div>
               </CardBody>
             </Card>
@@ -201,10 +272,28 @@ const WaterParameterDashboard: React.FC = () => {
         </div>
 
         {/* Historical Data Chart */}
-        <Card className="chart-container">
-          <CardTitle>📊 Parameter Trends (Last 5 Days)</CardTitle>
-          <CardBody>
-            <Chart>
+        <Card className="chart-container" style={{ 
+          borderRadius: '16px',
+          overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+          marginBottom: '24px'
+        }}>
+          <CardTitle style={{ 
+            background: 'linear-gradient(135deg, #2196f3 0%, #1976d2 100%)',
+            color: 'white',
+            padding: '20px 24px',
+            margin: 0,
+            fontSize: '18px',
+            fontWeight: '600',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <span>📊</span>
+            <span>Parameter Trends (Last 5 Days)</span>
+          </CardTitle>
+          <CardBody style={{ padding: '24px' }}>
+            <Chart style={{ height: '400px' }}>
               <ChartValueAxis>
                 <ChartValueAxisItem title={{ text: 'pH Level' }} min={6.5} max={7.5} />
                 <ChartValueAxisItem name="temp" title={{ text: 'Temperature (°F)' }} min={70} max={80} />
@@ -219,6 +308,8 @@ const WaterParameterDashboard: React.FC = () => {
                   data={historicalData.map(d => d.pH)}
                   name="pH Level"
                   color="#2196f3"
+                  style="smooth"
+                  markers={{ visible: true, size: 6 }}
                 />
                 <ChartSeriesItem
                   type="line"
@@ -226,6 +317,8 @@ const WaterParameterDashboard: React.FC = () => {
                   name="Temperature"
                   color="#ff9800"
                   axis="temp"
+                  style="smooth"
+                  markers={{ visible: true, size: 6 }}
                 />
                 <ChartSeriesItem
                   type="line"
@@ -233,6 +326,8 @@ const WaterParameterDashboard: React.FC = () => {
                   name="Ammonia"
                   color="#f44336"
                   axis="ammonia"
+                  style="smooth"
+                  markers={{ visible: true, size: 6 }}
                 />
               </ChartSeries>
               <ChartLegend position="top" />
@@ -242,12 +337,35 @@ const WaterParameterDashboard: React.FC = () => {
         </Card>
 
         {/* Quick Actions */}
-        <Card className="parameter-card">
-          <CardTitle>⚡ Quick Actions</CardTitle>
-          <CardBody>
-            <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+        <Card className="parameter-card" style={{ 
+          borderRadius: '16px',
+          overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)'
+        }}>
+          <CardTitle style={{ 
+            background: 'linear-gradient(135deg, #4caf50 0%, #388e3c 100%)',
+            color: 'white',
+            padding: '20px 24px',
+            margin: 0,
+            fontSize: '18px',
+            fontWeight: '600',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <span>⚡</span>
+            <span>Quick Actions</span>
+          </CardTitle>
+          <CardBody style={{ padding: '24px' }}>
+            <div style={{ 
+              display: 'flex', 
+              gap: '16px', 
+              flexWrap: 'wrap',
+              justifyContent: 'center'
+            }}>
               <Button
                 themeColor="primary"
+                size="large"
                 onClick={() => {
                   setNotifications(prev => [...prev, {
                     id: Date.now(),
@@ -255,11 +373,18 @@ const WaterParameterDashboard: React.FC = () => {
                     content: '✅ Water test completed! All parameters are within optimal ranges.'
                   }]);
                 }}
+                style={{ 
+                  minWidth: '180px',
+                  height: '48px',
+                  borderRadius: '24px',
+                  fontWeight: '600'
+                }}
               >
                 🧪 Test Water Now
               </Button>
               <Button
                 themeColor="primary"
+                size="large"
                 onClick={() => {
                   setNotifications(prev => [...prev, {
                     id: Date.now(),
@@ -267,17 +392,30 @@ const WaterParameterDashboard: React.FC = () => {
                     content: '📝 Water change reminder set for next week'
                   }]);
                 }}
+                style={{ 
+                  minWidth: '180px',
+                  height: '48px',
+                  borderRadius: '24px',
+                  fontWeight: '600'
+                }}
               >
                 💧 Schedule Water Change
               </Button>
               <Button
                 themeColor="primary"
+                size="large"
                 onClick={() => {
                   setNotifications(prev => [...prev, {
                     id: Date.now(),
                     type: 'info',
                     content: '📊 Parameter report generated and saved'
                   }]);
+                }}
+                style={{ 
+                  minWidth: '180px',
+                  height: '48px',
+                  borderRadius: '24px',
+                  fontWeight: '600'
                 }}
               >
                 📊 Generate Report

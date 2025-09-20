@@ -278,9 +278,40 @@ const EducationalContent: React.FC = () => {
   return (
     <div className="aquarium-theme">
       <div className="fade-in">
-        <h1 style={{ marginBottom: '20px', color: '#1976d2', fontSize: '28px' }}>
-          📚 Educational Content
-        </h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: '24px',
+          padding: '20px',
+          background: 'linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0, 150, 136, 0.15)'
+        }}>
+          <div style={{ 
+            fontSize: '32px', 
+            marginRight: '16px',
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+          }}>📚</div>
+          <div>
+            <h1 style={{ 
+              margin: 0, 
+              color: '#00695c', 
+              fontSize: '28px',
+              fontWeight: '700',
+              textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            }}>
+              Educational Content
+            </h1>
+            <p style={{ 
+              margin: '4px 0 0 0', 
+              color: '#00796b', 
+              fontSize: '16px',
+              fontWeight: '500'
+            }}>
+              Learn everything about freshwater aquarium care
+            </p>
+          </div>
+        </div>
 
         {/* Filters */}
         <Card className="parameter-card" style={{ marginBottom: '20px' }}>

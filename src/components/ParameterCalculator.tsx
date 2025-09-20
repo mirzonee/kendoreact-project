@@ -191,9 +191,40 @@ const ParameterCalculator: React.FC = () => {
   return (
     <div className="aquarium-theme">
       <div className="fade-in">
-        <h1 style={{ marginBottom: '20px', color: '#1976d2', fontSize: '28px' }}>
-          🧮 Water Parameter Calculator
-        </h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: '24px',
+          padding: '20px',
+          background: 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(255, 152, 0, 0.15)'
+        }}>
+          <div style={{ 
+            fontSize: '32px', 
+            marginRight: '16px',
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+          }}>🧮</div>
+          <div>
+            <h1 style={{ 
+              margin: 0, 
+              color: '#e65100', 
+              fontSize: '28px',
+              fontWeight: '700',
+              textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            }}>
+              Water Parameter Calculator
+            </h1>
+            <p style={{ 
+              margin: '4px 0 0 0', 
+              color: '#f57c00', 
+              fontSize: '16px',
+              fontWeight: '500'
+            }}>
+              Calculate optimal water parameters and adjustments
+            </p>
+          </div>
+        </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
           {/* Tank Information */}

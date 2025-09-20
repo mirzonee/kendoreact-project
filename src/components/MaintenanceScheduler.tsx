@@ -232,9 +232,40 @@ const MaintenanceScheduler: React.FC = () => {
   return (
     <div className="aquarium-theme">
       <div className="fade-in">
-        <h1 style={{ marginBottom: '20px', color: '#1976d2', fontSize: '28px' }}>
-          📅 Maintenance Scheduler
-        </h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: '24px',
+          padding: '20px',
+          background: 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(156, 39, 176, 0.15)'
+        }}>
+          <div style={{ 
+            fontSize: '32px', 
+            marginRight: '16px',
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+          }}>📅</div>
+          <div>
+            <h1 style={{ 
+              margin: 0, 
+              color: '#7b1fa2', 
+              fontSize: '28px',
+              fontWeight: '700',
+              textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            }}>
+              Maintenance Scheduler
+            </h1>
+            <p style={{ 
+              margin: '4px 0 0 0', 
+              color: '#9c27b0', 
+              fontSize: '16px',
+              fontWeight: '500'
+            }}>
+              Keep your aquarium healthy with scheduled maintenance
+            </p>
+          </div>
+        </div>
 
         {/* Quick Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' }}>

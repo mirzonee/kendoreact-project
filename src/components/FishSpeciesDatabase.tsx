@@ -220,9 +220,40 @@ const FishSpeciesDatabase: React.FC = () => {
   return (
     <div className="aquarium-theme">
       <div className="fade-in">
-        <h1 style={{ marginBottom: '20px', color: '#1976d2', fontSize: '28px' }}>
-          🐠 Freshwater Fish Database
-        </h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: '24px',
+          padding: '20px',
+          background: 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(76, 175, 80, 0.15)'
+        }}>
+          <div style={{ 
+            fontSize: '32px', 
+            marginRight: '16px',
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+          }}>🐠</div>
+          <div>
+            <h1 style={{ 
+              margin: 0, 
+              color: '#2e7d32', 
+              fontSize: '28px',
+              fontWeight: '700',
+              textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            }}>
+              Freshwater Fish Database
+            </h1>
+            <p style={{ 
+              margin: '4px 0 0 0', 
+              color: '#388e3c', 
+              fontSize: '16px',
+              fontWeight: '500'
+            }}>
+              Discover and learn about freshwater fish species
+            </p>
+          </div>
+        </div>
 
         {/* Filters */}
         <Card className="parameter-card" style={{ marginBottom: '20px' }}>
